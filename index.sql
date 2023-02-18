@@ -91,14 +91,14 @@ CREATE TABLE Library (
   PRIMARY KEY (book_fk_id, student_fk_id)
 );
 
--- 6- Ajoutez 4 enregistrements dans la table de jonction, utilisez des sous-requêtes.
+-- 6- Add 4 records in the join table, use subqueries.
 INSERT INTO Library (book_fk_id, student_fk_id, borrowed_date) VALUES
 ((SELECT book_id FROM Book WHERE title = 'Alice In Wonderland'), (SELECT student_id FROM Student WHERE name = 'John'), '2022-02-15'),
 ((SELECT book_id FROM Book WHERE title = 'To kill a mockingbird'), (SELECT student_id FROM Student WHERE name = 'Bob'), '2021-03-03'),
 ((SELECT book_id FROM Book WHERE title = 'Alice In Wonderland'), (SELECT student_id FROM Student WHERE name = 'Lera'), '2021-05-23'),
 ((SELECT book_id FROM Book WHERE title = 'Harry Potter'), (SELECT student_id FROM Student WHERE name = 'Bob'), '2021-08-12');
 
--- 7- Afficher les données
+-- 7- Display data
 SELECT * FROM Library;
 
 SELECT s.name, b.title 
