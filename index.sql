@@ -1,5 +1,5 @@
 -- PART I
--- 1- Créez 2 tables : Client et Profil client. Ils ont une relation One to One.
+-- 1- Create 2 tables: Customer and Customer Profile. They have a One to One relationship.
 
 -- table Customer 
 CREATE TABLE Customer (
@@ -15,30 +15,30 @@ CREATE TABLE Customer_profile (
   customer_id INTEGER REFERENCES Customer(id)
 );
 
--- 2- Insérez ces clients (Jean, biche), (Jérôme, Lalu), (Léa, Rive)
+-- 2- Insert these clients (Jean, biche), (Jérôme, Lalu), (Léa, Rive)
 INSERT INTO Customer (first_name, last_name) VALUES
 ('John', 'Doe'),
 ('Jerome', 'Lalu'),
 ('Lea', 'Rive');
 
--- 3- Insérez ces profils clients, utilisez des sous-requêtes
+-- 3- Insert these customer profiles, use subqueries
 INSERT INTO Customer_profile (isLoggedIn, customer_id) VALUES
 (true, (SELECT id FROM Customer WHERE first_name = 'John')),
 (false, (SELECT id FROM Customer WHERE first_name = 'Jerome')));
 
--- 4- Utilisez les types de jointures pertinents pour afficher 
+-- 4- Use the relevant join types to display 
 -- Le prénom des clients connectés
 SELECT c.first_name 
 FROM Customer c
 JOIN Customer_profile cp ON c.id = cp.customer_id 
 WHERE cp.isLoggedIn = true;
 
--- Toutes les colonnes first_name et isLoggedIn des clients - même les clients qui n'ont pas de profil.
+-- All first_name and isLoggedIn columns of clients - even clients who do not have a profile.
 SELECT c.first_name, cp.isLoggedIn 
 FROM Customer c
 LEFT JOIN Customer_profile cp ON c.id = cp.customer_id;
 
--- Le nombre de clients non connectés
+-- The number of unconnected customers
 SELECT COUNT(*) 
 FROM Customer c
 LEFT JOIN Customer_profile cp ON c.id = cp.customer_id
@@ -46,30 +46,30 @@ WHERE cp.id IS NULL OR cp.isLoggedIn = false;
 
 
 --PART II
--- 1- Créez une table nommée Book , avec les colonnes : book_id SERIAL PRIMARY KEY, title NOT NULL,author NOT NULL
+-- 1- Create a table named Book , with the columns: book_id SERIAL PRIMARY KEY, title NOT NULL,author NOT NULL
 CREATE TABLE Book (
   book_id SERIAL PRIMARY KEY,
   title TEXT NOT NULL,
   author TEXT NOT NULL
 );
 
--- 2- Insérez ces livres :
---Alice au pays des merveilles, Lewis Carroll
+-- 2- Insert these books:
+--Alice In Wonderland, Lewis Carroll
 --Harry Potter, JK Rowling
---Pour tuer un oiseau moqueur, Harper Lee
+--To kill a mockingbird, Harper Lee
 INSERT INTO Book (title, author) VALUES
 ('Alice In Wonderland', 'Lewis Carroll'),
 ('Harry Potter', 'J.K Rowling'),
 ('To kill a mockingbird', 'Harper Lee');
 
--- 3- Créez une table nommée Student , avec les colonnes : student_id SERIAL PRIMARY KEY, name NOT NULL UNIQUE, age. Assurez-vous que l'âge n'est jamais supérieur à 15 ans (Recherchez une méthode SQL) ;
+-- 3- Create a table named Student , with the columns: student_id SERIAL PRIMARY KEY, name NOT NULL UNIQUE, age. Make sure the age is never greater than 15 years (Look for an SQL method);
 CREATE TABLE Student (
   student_id SERIAL PRIMARY KEY,
   name TEXT NOT NULL UNIQUE,
   age INTEGER CHECK (age <= 15)
 );
 
--- 4- Insérez ces étudiants :
+-- 4- Insert these students :
 -- Jean, 12 ans
 -- Léra, 11 ans
 -- Patrick, 10 ans
@@ -80,7 +80,7 @@ INSERT INTO Student (name, age) VALUES
 ('Patrick', 10),
 ('Bob', 14);
 
--- 5- Créez une table nommée Library , avec les colonnes :
+-- 5- Create a table named Library , with the columns :
 -- book_fk_id ON DELETE CASCADE ON UPDATE CASCADE
 -- student_id ON DELETE CASCADE ON UPDATE CASCADE
 -- borrowed_date
